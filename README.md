@@ -38,7 +38,7 @@ This is a Node.js application using Express to retrieve and serve transaction da
    npm start
    ```
 
-   The server will start on `http://localhost:3000`.
+   The server will start on `http://localhost:3000/transactions`.
 
 ## API Endpoints
 
