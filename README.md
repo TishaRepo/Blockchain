@@ -1,7 +1,3 @@
-Here’s a README file for your Node.js application:
-
----
-
 # Solana Transactions API
 
 This is a Node.js application using Express to retrieve and serve transaction data from the Solana blockchain. It fetches token metadata and transactions for a specific wallet address on the Solana mainnet-beta cluster.
