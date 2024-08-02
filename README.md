@@ -98,3 +98,7 @@ Retrieves the latest transactions for the specified wallet address. It includes 
 
 In case of errors, we get the status as "error" with a message.
 
+## Note
+
+Node version - v20.10.0
+
