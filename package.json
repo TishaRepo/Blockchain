@@ -1,0 +1,33 @@
+{
+  "name": "blockchain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index3.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node index3.mjs",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TishaRepo/Blockchain.git"
+  },
+  "author": "Tisha Madame",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TishaRepo/Blockchain/issues"
+  },
+  "homepage": "https://github.com/TishaRepo/Blockchain#readme",
+  "dependencies": {
+    "@metaplex/js": "^4.12.0",
+    "@solana/spl-token": "^0.4.8",
+    "@solana/web3.js": "^1.95.2",
+    "axios": "^1.7.2",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "node-fetch": "^3.3.2",
+    "p-limit": "^6.1.0",
+    "uuid": "^10.0.0",
+    "web3": "^4.11.1"
+  }
+}
