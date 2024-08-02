@@ -2,10 +2,10 @@
   "name": "blockchain",
   "version": "1.0.0",
   "description": "",
-  "main": "index3.mjs",
+  "main": "index.mjs",
   "type": "module",
   "scripts": {
-    "start": "node index3.mjs",
+    "start": "node index.mjs",
     "test": "test"
   },
   "repository": {
