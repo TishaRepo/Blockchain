@@ -5,11 +5,7 @@
   "main": "index.mjs",
   "type": "module",
   "scripts": {
-<<<<<<< Updated upstream
     "start": "node index.mjs",
-=======
-    "start": "node metadata.js",
->>>>>>> Stashed changes
     "test": "test"
   },
   "repository": {
