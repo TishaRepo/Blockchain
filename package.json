@@ -5,7 +5,11 @@
   "main": "index.mjs",
   "type": "module",
   "scripts": {
+<<<<<<< Updated upstream
     "start": "node index.mjs",
+=======
+    "start": "node metadata.js",
+>>>>>>> Stashed changes
     "test": "test"
   },
   "repository": {
@@ -19,10 +23,14 @@
   },
   "homepage": "https://github.com/TishaRepo/Blockchain#readme",
   "dependencies": {
+    "@metaplex-foundation/js": "^0.20.1",
+    "@metaplex-foundation/mpl-token-metadata": "^3.2.1",
     "@metaplex/js": "^4.12.0",
+    "@project-serum/anchor": "^0.26.0",
     "@solana/spl-token": "^0.4.8",
     "@solana/web3.js": "^1.95.2",
     "axios": "^1.7.2",
+    "blockchain": "file:",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "node-fetch": "^3.3.2",

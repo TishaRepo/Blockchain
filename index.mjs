@@ -1,7 +1,8 @@
 import express from 'express';
 import { PublicKey, Connection, clusterApiUrl } from '@solana/web3.js';
-import fetch from 'node-fetch'; // Make sure to install node-fetch
+import fetch from 'node-fetch';
 import { v4 as uuidv4 } from 'uuid';
+import { Metaplex } from '@metaplex-foundation/js';
 
 const app = express();
 const port = 3000;
@@ -9,16 +10,36 @@ const port = 3000;
 const walletAddress = "4UYjrT5hmMTh9pLFg1Mxh49besnAeCc23qFoZc6WnQkK";
 const connection = new Connection(clusterApiUrl("mainnet-beta"));
 let tokenList = [];
+const metaplex = Metaplex.make(connection);
 
-// Fetch the Solana token list
-async function fetchTokenList() {
-    const response = await fetch('https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json');
-    const tokenListJson = await response.json();
-    tokenList = tokenListJson.tokens;
-}
 
-function getTokenMetadata(mint) {
-    return tokenList.find(token => token.address === mint) || {};
+
+
+
+async function getMetadata(mintAddress) {
+    try {
+        const metadataAccount = metaplex
+            .nfts()
+            .pdas()
+            .metadata({ mint: new PublicKey(mintAddress) });
+
+        const metadataAccountInfo = await connection.getAccountInfo(metadataAccount);
+        
+        if (metadataAccountInfo) {
+            const token = await metaplex.nfts().findByMint({ mintAddress: new PublicKey(mintAddress) });
+            
+            return {
+                name: token.name || 'Unknown Token',
+                symbol: token.symbol || 'UNKNOWN',
+                logoURI: token.json.image || ''
+            };
+        } else {
+            return { name: 'Unknown Token', symbol: 'UNKNOWN', logoURI: '' };
+        }
+    } catch (error) {
+        console.error('Error fetching metadata:', error);
+        return { name: 'Unknown Token', symbol: 'UNKNOWN', logoURI: '' };
+    }
 }
 
 async function getTransactionsOfUser(address, connection, limit) {
@@ -26,7 +47,7 @@ async function getTransactionsOfUser(address, connection, limit) {
         const publicKey = new PublicKey(address);
         const transactions = [];
         let beforeString = null;
-        
+
         while (transactions.length < limit) {
             const options = { limit: 10, before: beforeString }; // Fetch in batches of 10
             const transSignatures = await connection.getSignaturesForAddress(publicKey, options);
@@ -44,7 +65,9 @@ async function getTransactionsOfUser(address, connection, limit) {
                         const tokenAccount = tokenAccountIndex !== -1 ? meta.postTokenBalances[tokenAccountIndex] : null;
 
                         if (tokenAccount) { // Only include transactions with token information
-                            const tokenMetadata = getTokenMetadata(tokenAccount.mint);
+                            const tokenMetadata = await getMetadata(tokenAccount.mint);
+                            
+
                             const transWithSignature = {
                                 uuid: uuidv4(),
                                 network: "Solana",
@@ -89,7 +112,7 @@ async function getTransactionsOfUser(address, connection, limit) {
 
 app.get('/transactions', async (req, res) => {
     try {
-        await fetchTokenList();
+        // await fetchTokenList();
         const response = await getTransactionsOfUser(walletAddress, connection, 5);
         res.json(response);
     } catch (error) {
